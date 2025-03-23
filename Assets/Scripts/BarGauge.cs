@@ -152,11 +152,11 @@ public class BarGauge : MonoBehaviour
 
         // Menghitung indeks dari belakang ke depan
         int reverseIndex = heightBar.Count - NoteObject.counterWilanganTotal;
-
-        if (reverseIndex >= 0 && reverseIndex < heightBar.Count)
+        Debug.Log(reverseIndex+" "+NoteObject.counterWilanganTotal+" "+heightBar.Count);
+        if (reverseIndex >= 0 && reverseIndex <= heightBar.Count)
         {
             // Tambahkan tinggi baru ke fluid
-            currentHeight += heightBar[reverseIndex];
+            currentHeight += heightBar[reverseIndex-1];
             /*Debug.Log($"Menggunakan Indeks {reverseIndex}: {heightBar[reverseIndex]}");*/
 
             // Atur ukuran RectTransform
