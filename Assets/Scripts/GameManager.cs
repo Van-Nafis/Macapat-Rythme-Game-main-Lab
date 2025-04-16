@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
         missedHits++;
     }
 
-    public void ComboHit()
+    public void ComboHit() //Cari solusi tentang combo ini
     {
         /*InvokeRepeating("Combo", 0, 0.01f);*/
 

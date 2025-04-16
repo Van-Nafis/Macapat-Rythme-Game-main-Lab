@@ -631,7 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 28253577}
   m_Layer: 5
-  m_Name: Gatra 6 notFix
+  m_Name: Gatra 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -650,8 +650,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 718232045}
-  - {fileID: 986959326}
   - {fileID: 933033761}
+  - {fileID: 986959326}
   - {fileID: 294676077}
   - {fileID: 1847834794}
   - {fileID: 696988871}
