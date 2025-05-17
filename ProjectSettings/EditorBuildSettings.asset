@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Unity Template/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 7d8e6de564f00bd40b3b7847137e6dac
+  - enabled: 1
     path: Assets/Scenes/Belajar 1.unity
     guid: f96c3b9226495aa42aa465e95b3b0eed
   - enabled: 1
@@ -20,4 +23,37 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Debug.unity
     guid: c71ac6944e0d42340836a3fff43d8c86
+  - enabled: 1
+    path: Assets/Scenes/Asmaradana.unity
+    guid: 71bde8d9c6c1e3642ab5db6fbac3bb14
+  - enabled: 1
+    path: Assets/Scenes/Dhandhanggula.unity
+    guid: 479870d0a27f06a4c918e4aea0702b0a
+  - enabled: 1
+    path: Assets/Scenes/Durma.unity
+    guid: 26b2e232dafa0ac42bed729224da3e7a
+  - enabled: 1
+    path: Assets/Scenes/Gambuh.unity
+    guid: 30fa591e948f59b44995402b75abbc41
+  - enabled: 1
+    path: Assets/Scenes/Kinanthi.unity
+    guid: 94ed22a40091ca04d9e390dd75501a90
+  - enabled: 1
+    path: Assets/Scenes/Maskumambang.unity
+    guid: 2d1c95ce44195524b92a7a1dc8afc23e
+  - enabled: 1
+    path: Assets/Scenes/Megatruh.unity
+    guid: a2594f863446bd244b5723f89f9fb30c
+  - enabled: 1
+    path: Assets/Scenes/Mijil.unity
+    guid: 511d3e93db77cf243a8390fd47f98020
+  - enabled: 1
+    path: Assets/Scenes/Pangkur.unity
+    guid: e0368bf51e94a46428f50da537a881c6
+  - enabled: 1
+    path: Assets/Scenes/Pocung.unity
+    guid: f507ba85e57ece84a8c1c423daa0d565
+  - enabled: 1
+    path: Assets/Scenes/Sinom.unity
+    guid: 0a1e54f7df7123a459eaac428d4455d2
   m_configObjects: {}

@@ -43,7 +43,7 @@ public class NoteObject : MonoBehaviour
 
                 //GameManager.instance.NoteHit();
 
-                if (Mathf.Abs(transform.position.y) > 0.5)
+                if (Mathf.Abs(transform.position.y) > 0.5f)
                 {
                     Debug.Log("Hit");
                     GameManager.instance.NormalHit();
@@ -55,7 +55,7 @@ public class NoteObject : MonoBehaviour
                     GameManager.instance.GoodHit();
                     Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
                 }
-                else if (Mathf.Abs(transform.position.y) >= 0)
+                else if (Mathf.Abs(transform.position.y) >= 0f)
                 {
                     Debug.Log("Perfect");
                     GameManager.instance.PerfectHit();
@@ -82,7 +82,7 @@ public class NoteObject : MonoBehaviour
     public void OnPointerDown()
     {
         // Mendapatkan komponen SpriteRenderer
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();    
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (canBePressed)
         {
@@ -105,16 +105,18 @@ public class NoteObject : MonoBehaviour
         if (canBePressed)
         {
             // Memastikan spriteRenderer ada dan kemudian menyembunyikan sprite
-            if (spriteRenderer != null)
+            if (spriteRenderer != null && spriteRendererBody != null)
             {
-                spriteRenderer.enabled = false;  // Menyembunyikan sprite di GameObject 1
-            }
-
-            if (spriteRendererBody != null)
-            {
+                // Menyembunyikan sprite
+                spriteRenderer.enabled = false;
                 spriteRendererBody.enabled = false;
             }
-        }        
+
+            else
+            {
+                Debug.Log("spriteRenderer = null atau spriteRendererBody = null");
+            }
+        }
 
         StopCoroutine(HoldCombo());
         isPressed = false;
@@ -124,6 +126,7 @@ public class NoteObject : MonoBehaviour
     private IEnumerator HoldCombo()
     {
         isPressed = true;
+        GameManager.instance.comboHits++;
         while (isPressed && canBePressed)
         {
             // Tambahkan efek kombo atau visual jika diperlukan
@@ -194,9 +197,10 @@ public class NoteObject : MonoBehaviour
         }
         counterWilanganTotal += 1;
         /*Debug.Log(counterWilanganTotal);*/
-
         /*Debug.Log(GameManager.instance.music.counter);*/
+
     }
+
 
     private void OnTriggerExit2D(Collider2D collision)
     {

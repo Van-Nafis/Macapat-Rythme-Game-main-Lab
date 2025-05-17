@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class BarGauge : MonoBehaviour
 {
-    public Image ImageBar;
-    public GameObject penandaGatra, penandaWilangan;
+    public Image ImageBar, progressBar;
 
-    public Image progressBar;
+    public GameObject penandaGatra, penandaWilangan, barUntukPopUpGatra;
+
     public List<float> heightBar = new List<float>();
+    public List<float> tinggiAkumulasiGatra = new List<float>();
 
     public int hitObjectTotal;
 
@@ -29,6 +30,11 @@ public class BarGauge : MonoBehaviour
         Vector2 newSize = rectTransform.sizeDelta;
         newSize.y = 750f;
         rectTransform.sizeDelta = newSize;
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void barProgressCap() // Sudah fix, JANGAN DIAPAPAIN
@@ -57,7 +63,9 @@ public class BarGauge : MonoBehaviour
             GameObject tandaGatra = Instantiate(penandaGatra, ImageBar.transform);
             RectTransform gatraRect = tandaGatra.GetComponent<RectTransform>();
             gatraRect.anchoredPosition = new Vector2(0f, posY);
+            tinggiAkumulasiGatra.Add(posY);
 
+            /*Debug.Log(tinggiAkumulasiGatra[i]);*/
             /*Debug.Log($"Penanda Gatra {i + 1}: Posisi Y adalah {gatraRect.anchoredPosition.y}");*/  // Penanda gatra 
 
             // Buat guru Wilangan di samping tanda gatra
@@ -66,7 +74,7 @@ public class BarGauge : MonoBehaviour
             RectTransform wilanganRect = instantiatedGuruWilangan.GetComponent<RectTransform>();
             wilanganRect.anchoredPosition = new Vector2(gatraRect.anchoredPosition.x + horizontalOffset, posY);
 
-            /*Debug.Log("Berhasil diintansikan");*/
+            /*Debug.Log("Berhasil diins tansikan");*/
 
             // Kurangi posisi Y untuk memulai pembagian di bawah gatra ini
             posY -= divisionHeight;
@@ -101,58 +109,23 @@ public class BarGauge : MonoBehaviour
         StartCoroutine(IncrementProgressCoroutine());
     }
 
-    /*private IEnumerator IncrementProgressCoroutine()
-    {
-        // Ambil RectTransform dari ImageFluid
-        RectTransform rectFluid = progressBar.GetComponent<RectTransform>();
-        // Ambil RectTransform dari ImageBar
-        RectTransform rectTransform = ImageBar.GetComponent<RectTransform>();
-
-        // Hitung tinggi total dan jumlah gatra
-        float totalHeight = rectTransform.rect.height;
-
-        float currentHeight = rectFluid.sizeDelta.y; // Mulai dari tinggi saat ini
-        int i = NoteObject.counterWilanganTotal - 1; // Gunakan indeks terbaru
-
-        if (i >= 0 && i < heightBar.Count)
-        {
-            // Tambahkan tinggi baru ke fluid
-            currentHeight += heightBar[heightBar.Count-1];
-            Debug.Log(heightBar[heightBar.Count-1]);
-            // Atur ukuran RectTransform
-            Vector2 newSizeFluid = rectFluid.sizeDelta;
-            newSizeFluid.y = currentHeight;
-            rectFluid.sizeDelta = newSizeFluid;
-
-            // Posisikan rectFluid ke tengah sesuai tinggi yang baru
-            Vector2 newPosition = rectFluid.anchoredPosition;
-            newPosition.y = -totalHeight / 2 + currentHeight / 2; // Pivot berada di tengah
-            rectFluid.anchoredPosition = newPosition;
-
-            Debug.Log($"Fluid Updated: Height = {currentHeight}, Position Y = {newPosition.y}");
-        }
-        else
-        {
-            Debug.LogWarning("HitObjectTotal sudah maksimal atau indeks tidak valid!");
-        }
-        yield return null;
-    }*/
-
     private IEnumerator IncrementProgressCoroutine()
     {
-        // Ambil RectTransform dari ImageFluid
+        // Ambil RectTransform dari ImageFluid dan ImageBar
         RectTransform rectFluid = progressBar.GetComponent<RectTransform>();
-        // Ambil RectTransform dari ImageBar
         RectTransform rectTransform = ImageBar.GetComponent<RectTransform>();
+
+        // Coba (PopUpGatra merubah box collider sesuai dengan bentuk rect terbaru)
+        RectTransform rectPopUpGatra = barUntukPopUpGatra.GetComponent<RectTransform>();
+        BoxCollider2D colliderPopUpGatra = barUntukPopUpGatra.GetComponent<BoxCollider2D>();
 
         // Hitung tinggi total dan jumlah gatra
         float totalHeight = rectTransform.rect.height;
-
         float currentHeight = rectFluid.sizeDelta.y; // Mulai dari tinggi saat ini
 
         // Menghitung indeks dari belakang ke depan
         int reverseIndex = heightBar.Count - NoteObject.counterWilanganTotal;
-        Debug.Log(reverseIndex+" "+NoteObject.counterWilanganTotal+" "+heightBar.Count);
+        /*Debug.Log(reverseIndex+" "+NoteObject.counterWilanganTotal+" "+heightBar.Count);*/
         if (reverseIndex >= 0 && reverseIndex <= heightBar.Count)
         {
             // Tambahkan tinggi baru ke fluid
@@ -176,9 +149,17 @@ public class BarGauge : MonoBehaviour
             Debug.LogWarning("HitObjectTotal sudah maksimal atau indeks tidak valid!");
         }
 
+        // PopUpGatra (Merubah boxCollider2D sesuai dengan ukuran rectTransformnya)
+        if (rectPopUpGatra != null && colliderPopUpGatra != null)
+        {
+            colliderPopUpGatra.size = rectPopUpGatra.rect.size;
+            colliderPopUpGatra.offset = rectPopUpGatra.rect.center;
+            Physics2D.SyncTransforms(); // hanya saat perlu
+        }
+
+
+
         yield return null;
     }
 
 }
-
-// cari cara untuk menambahkan progress barFluid supaya bisa menambahkan tingginya ketika setiap note bersentuhan dengan Buttons

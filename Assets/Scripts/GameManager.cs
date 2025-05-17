@@ -33,10 +33,11 @@ public class GameManager : MonoBehaviour
     public float normalHits;
     public float goodHits;
     public float perfectHits;
+    public float comboHits;
     public float missedHits;
 
     public GameObject resultsScreen;
-    public Text percentHitText, normalsText, goodsText, perfectsText, missesText, rankText, finalScoreText;
+    public Text percentHitText, normalsText, goodsText, comboText, perfectsText, missesText, rankText, finalScoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -72,10 +73,11 @@ public class GameManager : MonoBehaviour
 
                 normalsText.text = normalHits.ToString();
                 goodsText.text = goodHits.ToString();
+                comboText.text = comboHits.ToString();
                 perfectsText.text = perfectHits.ToString();
                 missesText.text = missedHits.ToString();
 
-                float totalHit = normalHits + goodHits + perfectHits;
+                float totalHit = normalHits + goodHits + perfectHits + comboHits;
                 float percentHit = (totalHit / totalNotes) * 100f;
 
                 percentHitText.text = percentHit.ToString("F1") + "%";
@@ -156,8 +158,6 @@ public class GameManager : MonoBehaviour
     }
     public void NoteMissed()
     {
-        /*Debug.Log("Missed Note");*/
-
         currentMultiplier = 1;
         multiplierTracker = 0;
 
@@ -166,13 +166,10 @@ public class GameManager : MonoBehaviour
         missedHits++;
     }
 
-    public void ComboHit() //Cari solusi tentang combo ini
+    public void ComboHit()
     {
-        /*InvokeRepeating("Combo", 0, 0.01f);*/
-
         currentScore += 25;
         NoteHit();
-       
 
     }
 }

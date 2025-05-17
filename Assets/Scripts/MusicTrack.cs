@@ -18,23 +18,12 @@ public class MusicTrack : MonoBehaviour
     private void Start()
     {
         instance = this;
-        theMusic.Stop();
-
-        musicSlider.minValue = 0;
-        musicSlider.maxValue = theMusic.clip.length;
-        musicSlider.value = 0;
-
-        // Tambahkan event listener ke slider
-        musicSlider.onValueChanged.AddListener(delegate { OnSliderChanged(); });
+        theMusic.Stop();       
     }
 
     private void Update()
     {
-        // Update slider hanya jika tidak sedang di-drag
-        if (!isDragging && theMusic.isPlaying)
-        {
-            musicSlider.value = theMusic.time;
-        }
+
     }
 
     // Ketika slider mulai di-drag
