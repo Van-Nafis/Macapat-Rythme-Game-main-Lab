@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+
+    public void Start()
+    {
+
+    }
+
     public void PlayGame1()
     {
         SceneManager.LoadScene("Maskumambang");
@@ -82,7 +88,7 @@ public class MainMenu : MonoBehaviour
 
     public void GoToLearning()
     {
-        SceneManager.LoadScene("Belajar 1");
+        SceneManager.LoadScene("Belajar 1 Alt");
     }
 
     public void QuitGame()

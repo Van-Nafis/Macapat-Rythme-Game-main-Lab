@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(MusicTrack))]
 public class GameManager : MonoBehaviour
 {
-
     public MusicTrack music;
 
     public bool startPlaying;
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int scorePerNote = 100;
     public int scorePerGoodNote = 125;
     public int scorePerPerfectNote = 150;
+    public Text highScoreText;
 
     public int currentMultiplier;
     public int multiplierTracker;
@@ -39,9 +40,12 @@ public class GameManager : MonoBehaviour
     public GameObject resultsScreen;
     public Text percentHitText, normalsText, goodsText, comboText, perfectsText, missesText, rankText, finalScoreText;
 
+    private bool medaliSudahDipanggil = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(SceneManager.GetActiveScene().name);
         instance = this;
 
         scoreText.text = "Score: 0";
@@ -54,6 +58,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        highScore();
+
         if (!startPlaying)
         {
             if (Input.anyKeyDown)
@@ -110,6 +116,8 @@ public class GameManager : MonoBehaviour
                 finalScoreText.text = currentScore.ToString();
             }
         }
+
+        medali();
     }
 
     public void NoteHit()
@@ -171,5 +179,31 @@ public class GameManager : MonoBehaviour
         currentScore += 25;
         NoteHit();
 
+    }
+
+    public void highScore()
+    {
+        highScoreText.text = "High Score :\n" + PlayerPrefs.GetInt("HighScore");
+        if (currentScore > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", currentScore);
+            PlayerPrefs.Save();
+            highScoreText.text = "High Score :\n" + PlayerPrefs.GetInt("HighScore", 0);
+        }
+    }
+
+    public void medali()
+    {
+        if (medaliSudahDipanggil) return;
+
+        if (normalHits + goodHits + perfectHits + missedHits == totalNotes)
+        {
+            string sceneKey = SceneManager.GetActiveScene().name;
+            int currentFinishCount = PlayerPrefs.GetInt(sceneKey, 0);
+            PlayerPrefs.SetInt(sceneKey, currentFinishCount + 1);
+            PlayerPrefs.Save();
+
+            medaliSudahDipanggil = true;
+        }
     }
 }
