@@ -9,19 +9,27 @@ public class BtnBelajar : MonoBehaviour
 
     public GameObject btnRight, btnLeft;
     public RectTransform uiElement;
-    public Transform parentObj;
-    public List<GameObject> childList = new List<GameObject>();
+    public Transform parentObjText, parentObjImg;
+    public List<GameObject> childListPenj = new List<GameObject>();
+    public List<GameObject> childListImg = new List<GameObject>();
 
     public float moveDistance = 50f;
     public float moveSpeed = 5f;
 
+    public MacapatPlayer macapatPlayer;
+
     private void Start()
     {
-        if (parentObj != null)
+        if (parentObjText != null && parentObjImg != null)
         {
-            foreach (Transform child in parentObj)
+            foreach (Transform child in parentObjText)
             {
-                childList.Add(child.gameObject);
+                childListPenj.Add(child.gameObject);
+            }
+
+            foreach (Transform child in parentObjImg)
+            {
+                childListImg.Add(child.gameObject);
             }
         }
     }
@@ -30,32 +38,57 @@ public class BtnBelajar : MonoBehaviour
     {
         if (statAwal == 0)
         {
-            foreach (GameObject child in childList)
+            foreach (GameObject child in childListPenj)
+            {
+                child.SetActive(false);
+            }
+            foreach (GameObject child in childListImg)
             {
                 child.SetActive(false);
             }
 
-            childList[0].SetActive(true);
+            if (parentObjText == null)
+            {
+                Debug.Log("parentObjText kosong");
+            }
+
+            if (parentObjImg == null)
+            {
+                Debug.Log("parentObjImg kosong");
+            }
+
+            childListPenj[0].SetActive(true);
+            childListImg[0].SetActive(true);
             btnLeft.SetActive(false);
         }
 
         else if (statAwal == 10)
         {
-            foreach (GameObject child in childList)
+            foreach (GameObject child in childListPenj)
+            {
+                child.SetActive(false);
+            }
+            foreach (GameObject child in childListImg)
             {
                 child.SetActive(false);
             }
 
-            childList[10].SetActive(true);
+            childListPenj[10].SetActive(true);
+            childListImg[10].SetActive(true);
             btnRight.SetActive(false);
         }
 
         else
         {
-            foreach (GameObject child in childList)
+            foreach (GameObject child in childListPenj)
             {
                 child.SetActive(false);
-                childList[statAwal].SetActive(true);
+                childListPenj[statAwal].SetActive(true);
+            }
+            foreach (GameObject child in childListImg)
+            {
+                child.SetActive(false);
+                childListImg[statAwal].SetActive(true);
             }
 
             btnRight.SetActive(true);
@@ -69,10 +102,14 @@ public class BtnBelajar : MonoBehaviour
         {
             
             statAwal += 1;
-            /*posTransform(statAwal);*/
-            /*UpdatePosition();*/
             uiElement.localPosition += new Vector3(-moveStep, 0, 0);
-        }        
+            if (macapatPlayer == null) 
+            {
+                return;
+            }
+            macapatPlayer.PlayMacapatByIndex(statAwal);
+            
+        }
         Debug.Log("stat awal = " + statAwal);
     }
 
@@ -82,39 +119,14 @@ public class BtnBelajar : MonoBehaviour
         {
             
             statAwal -= 1;
-            /*posTransform(statAwal);*/
-            /*UpdatePosition();*/
             uiElement.localPosition += new Vector3(moveStep, 0, 0);
+            if (macapatPlayer == null)
+            {
+                return;
+            }
+            macapatPlayer.PlayMacapatByIndex(statAwal);
+            
         }  
         Debug.Log("stat awal = " + statAwal);
     }
-
-    /*private void posTransform(int i)
-    {
-        transform.position = (Vector3)new Vector2(-630f * i, 0);
-        Debug.Log("i: " + i + " | Posisi X: " + transform.position.x);
-
-    }
-
-    private void UpdatePosition()
-    {
-        // Menggeser objek ke kanan atau kiri berdasarkan statAwal
-        transform.position = new Vector3(statAwal * moveStep, transform.position.y, transform.position.z);
-        Debug.Log("Stat: " + statAwal + " | Posisi X: " + transform.position.x);
-    }
-
-    public void MoveRightSmooth()
-    {
-        StartCoroutine(MoveUI(new Vector2(uiElement.anchoredPosition.x + moveDistance, uiElement.anchoredPosition.y)));
-    }
-
-    IEnumerator MoveUI(Vector2 targetPos)
-    {
-        while (Vector2.Distance(uiElement.anchoredPosition, targetPos) > 0.1f)
-        {
-            uiElement.anchoredPosition = Vector2.Lerp(uiElement.anchoredPosition, targetPos, Time.deltaTime * moveSpeed);
-            yield return null;
-        }
-        uiElement.anchoredPosition = targetPos; // Pastikan sampai target
-    }*/
 }

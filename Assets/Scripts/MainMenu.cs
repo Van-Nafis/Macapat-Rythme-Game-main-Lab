@@ -91,6 +91,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Belajar 1 Alt");
     }
 
+    public void GoToLearningAudio()
+    {
+        SceneManager.LoadScene("Belajar 1");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
